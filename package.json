@@ -1,0 +1,29 @@
+{
+  "name": "ts-boot",
+  "version": "0.0.1",
+  "description": "Typescript project bootstrapper",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SayakMukhopadhyay/ts-boot.git"
+  },
+  "keywords": [
+    "typescript",
+    "boot"
+  ],
+  "author": "Sayak Mukhopadhyay <mukhopadhyaysayak@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/SayakMukhopadhyay/ts-boot/issues"
+  },
+  "homepage": "https://github.com/SayakMukhopadhyay/ts-boot#readme",
+  "dependencies": {
+    "typescript": "^4.4.3"
+  }
+}
