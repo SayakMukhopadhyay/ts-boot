@@ -18,12 +18,16 @@
   "author": "Sayak Mukhopadhyay <mukhopadhyaysayak@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "dependencies": {
     "typescript": "^4.4.3"
   },
   "engines": {
     "node": ">=16"
+  },
+  "devDependencies": {
+    "husky": "^7.0.2"
   }
 }
