@@ -18,7 +18,8 @@
   "author": "Sayak Mukhopadhyay <mukhopadhyaysayak@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "start:create": "ts-node src/index.ts create lmao",
+    "start:create": "ts-node src/index.ts create myproject",
+    "start:create:basic": "ts-node src/index.ts create myproject -t basic",
     "start:build": "ts-node src/index.ts build lmao",
     "build": "tsc",
     "prepare": "husky install"

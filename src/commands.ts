@@ -13,20 +13,31 @@ export class Commands {
     }
 
     public run() {
-        this.program.parse()
+        return this.program.parseAsync()
     }
 
     private create() {
         this.program
             .command('create <project>')
             .description('Create a Typescript project')
-            .action(async project => {
-                const answer = await inquirer.prompt([{
-                    type: "input",
-                    name: "template_type",
-                    message: "Select the template"
-                }])
-                console.log(`${project}:${answer}`)
+            .option('-t, --template <templateNme>', 'Specify template')
+            .action(async (project, options) => {
+                let template = options.template
+                if (!template) {
+                    template = (await inquirer.prompt([{
+                        type: "list",
+                        name: "templateNme",
+                        message: "Select the template",
+                        choices: [{
+                            name: "Basic",
+                            value: "basic"
+                        }, {
+                            name: "Library",
+                            value: "library"
+                        }]
+                    }])).templateNme
+                }
+                console.log(`${project}:${template}`)
             })
         return this
     }
