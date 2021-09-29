@@ -31,12 +31,11 @@ export class Commands {
                         choices: [{
                             name: "Basic",
                             value: "basic"
-                        }, {
-                            name: "Library",
-                            value: "library"
                         }]
                     }])).templateNme
                 }
+                // Todo: Check if the entered template name exists as a template in the templates folder
+                // Todo: Modify the files in the templates folder using mustache to have the values selected by the user
                 console.log(`${project}:${template}`)
             })
         return this

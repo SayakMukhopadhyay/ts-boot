@@ -1,0 +1,40 @@
+{
+  "name": "kodeblox",
+  "version": "0.1.0",
+  "description": "Typescript project bootstrapper",
+  "keywords": [
+    "typescript",
+    "boot"
+  ],
+  "homepage": "https://github.com/SayakMukhopadhyay/ts-boot#readme",
+  "bugs": {
+    "url": "https://github.com/SayakMukhopadhyay/ts-boot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SayakMukhopadhyay/ts-boot.git"
+  },
+  "author": "Sayak Mukhopadhyay <mukhopadhyaysayak@gmail.com>",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "test:coverage": "tsdx test --coverage",
+    "lint": "tsdx lint",
+    "lint:fix": "tsdx lint --fix",
+    "prepare": "tsdx build && husky install",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^5.0.4",
+    "husky": "^7.0.2",
+    "size-limit": "^5.0.4",
+    "tslib": "^2.3.1",
+    "typescript": "^3.9.10"
+  }
+}
