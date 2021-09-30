@@ -1,7 +1,12 @@
 import { Command } from "commander";
 import inquirer from "inquirer";
+import { resolve } from "path";
+import { render } from "mustache";
 
-const {version} = require("../package.json")
+
+import { copySync, readdirSync, readFile, readFileSync, writeFile } from 'fs-extra'
+
+const {version} = require("../package.json")    // require is used since package.json is not part of the root dire1
 
 export class Commands {
     program: Command
@@ -28,15 +33,19 @@ export class Commands {
                         type: "list",
                         name: "templateNme",
                         message: "Select the template",
-                        choices: [{
-                            name: "Basic",
-                            value: "basic"
-                        }]
+                        choices: this.getTemplateChoices()
                     }])).templateNme
                 }
-                // Todo: Check if the entered template name exists as a template in the templates folder
-                // Todo: Modify the files in the templates folder using mustache to have the values selected by the user
-                console.log(`${project}:${template}`)
+                const templateFolder = readdirSync(resolve(__dirname, "../templates", template))
+                templateFolder.filter(item => item !== ".tsboot.json").forEach(item => {
+                    copySync(resolve(__dirname, "../templates", template, item), resolve(process.cwd(), project, item))
+                })
+                const files = this.getAllFilesRecursive(resolve(process.cwd(), project))
+                await Promise.all(files.map(async file => {
+                    const fileData = (await readFile(file)).toString()
+                    const rendered = render(fileData, {projectName: project})
+                    await writeFile(file, rendered)
+                }))
             })
         return this
     }
@@ -79,5 +88,30 @@ export class Commands {
                 console.log("lint")
             })
         return this
+    }
+
+    private getAllFilesRecursive(path: string): string[] {
+        const files = readdirSync(path, {withFileTypes: true})
+        const allFiles = []
+        for (const file of files) {
+            if (file.isDirectory()) {
+                allFiles.push(...this.getAllFilesRecursive(resolve(path, file.name)))
+            } else {
+                allFiles.push(resolve(path, file.name))
+            }
+        }
+        return allFiles
+    }
+
+    private getTemplateChoices() {
+        return readdirSync(resolve(__dirname, "../templates"), {withFileTypes: true})
+            .filter(dirent => dirent.isDirectory())
+            .map(dirent => {
+                const config = JSON.parse(readFileSync(resolve(__dirname, "../templates", dirent.name, ".tsboot.json"), "utf8").toString())
+                return {
+                    name: config.templateName,
+                    value: dirent.name
+                }
+            })
     }
 }
