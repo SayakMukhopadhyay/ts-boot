@@ -1,4 +1,4 @@
-import { Commands } from "./commands";
+import { Commands } from './commands';
 
-const commands = new Commands()
-commands.run()
+const commands = new Commands();
+commands.run();
