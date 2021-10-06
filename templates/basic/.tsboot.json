@@ -1,3 +1,14 @@
 {
-  "templateName": "Basic"
+  "templateName": "Basic",
+  "dependencies": ["morgan"],
+  "devDependencies": [
+    "@size-limit/preset-small-lib",
+    "@types/express",
+    "@types/morgan",
+    "@types/node",
+    "husky",
+    "size-limit",
+    "tslib",
+    "typescript"
+  ]
 }

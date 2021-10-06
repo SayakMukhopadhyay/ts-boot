@@ -18,6 +18,8 @@ import { Command } from 'commander';
 import { prompt } from 'inquirer';
 import { resolve } from 'path';
 import { render } from 'mustache';
+import * as execa from 'execa';
+
 import { copySync, readdirSync, readFile, readFileSync, writeFile } from 'fs-extra';
 
 export class Commands {
@@ -37,10 +39,10 @@ export class Commands {
 
   private create() {
     this.program
-      .command('create <project>')
+      .command('create <projectName>')
       .description('Create a Typescript project')
       .option('-t, --template <templateNme>', 'Specify template')
-      .action(async (project, options) => {
+      .action(async (projectName, options) => {
         let template = options.template;
         if (!template) {
           template = (
@@ -54,20 +56,36 @@ export class Commands {
             ])
           ).templateNme;
         }
+        const projectDescription = (
+          await prompt([
+            {
+              type: 'input',
+              name: 'projectDescription',
+              message: 'Enter the project description'
+            }
+          ])
+        ).projectDescription;
         const templateFolder = readdirSync(resolve(__dirname, '../templates', template));
         templateFolder
           .filter((item) => item !== '.tsboot.json')
           .forEach((item) => {
-            copySync(resolve(__dirname, '../templates', template, item), resolve(process.cwd(), project, item));
+            copySync(resolve(__dirname, '../templates', template, item), resolve(process.cwd(), projectName, item));
           });
-        const files = this.getAllFilesRecursive(resolve(process.cwd(), project));
+        const files = this.getAllFilesRecursive(resolve(process.cwd(), projectName));
         await Promise.all(
           files.map(async (file) => {
             const fileData = (await readFile(file)).toString();
-            const rendered = render(fileData, { projectName: project });
+            const rendered = render(fileData, { projectName, projectDescription });
             await writeFile(file, rendered);
           })
         );
+        const targetDirectory = resolve(process.cwd(), projectName);
+        const dependencies = this.getDependencies(template);
+        console.log('Installing dependencies...');
+        let execOutput = execa.sync('npm', ['i', ...dependencies.dependencies], { cwd: targetDirectory });
+        console.log(execOutput.stdout);
+        execOutput = execa.sync('npm', ['i', '-D', ...dependencies.devDependencies], { cwd: targetDirectory });
+        console.log(execOutput.stdout);
       });
     return this;
   }
@@ -137,5 +155,15 @@ export class Commands {
           value: dirent.name
         };
       });
+  }
+
+  private getDependencies(template: string) {
+    const config = JSON.parse(
+      readFileSync(resolve(__dirname, '../templates', template, '.tsboot.json'), 'utf8').toString()
+    );
+    return {
+      dependencies: config.dependencies,
+      devDependencies: config.devDependencies
+    };
   }
 }
