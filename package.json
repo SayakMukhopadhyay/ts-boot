@@ -27,7 +27,6 @@
   "scripts": {
     "start:create": "ts-node src/index.ts create myproject",
     "start:create:basic": "ts-node src/index.ts create myproject -t basic",
-    "start:build": "ts-node src/index.ts build lmao",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "prepare": "husky install",
@@ -47,9 +46,6 @@
     "mustache": "^4.2.0",
     "typescript": "^4.4.3"
   },
-  "engines": {
-    "node": ">=14"
-  },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.1.3",
@@ -65,5 +61,8 @@
     "prettier": "^2.4.1",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

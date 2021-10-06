@@ -30,7 +30,7 @@ export class Commands {
     this.version = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8').toString()).version;
     this.program = new Command();
     this.program.version(this.version);
-    this.create().build().watch().test().lint();
+    this.create();
   }
 
   public run(): Promise<Command> {
@@ -86,46 +86,6 @@ export class Commands {
         console.log(execOutput.stdout);
         execOutput = execa.sync('npm', ['i', '-D', ...dependencies.devDependencies], { cwd: targetDirectory });
         console.log(execOutput.stdout);
-      });
-    return this;
-  }
-
-  private build() {
-    this.program
-      .command('build')
-      .description('Build a Typescript file/project')
-      .action(() => {
-        console.log('build');
-      });
-    return this;
-  }
-
-  private watch() {
-    this.program
-      .command('watch')
-      .description('Build a Typescript file/project')
-      .action(() => {
-        console.log('watch');
-      });
-    return this;
-  }
-
-  private test() {
-    this.program
-      .command('test')
-      .description('Build a Typescript file/project')
-      .action(() => {
-        console.log('test');
-      });
-    return this;
-  }
-
-  private lint() {
-    this.program
-      .command('lint')
-      .description('Build a Typescript file/project')
-      .action(() => {
-        console.log('lint');
       });
     return this;
   }
