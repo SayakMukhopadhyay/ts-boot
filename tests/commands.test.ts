@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-import { Commands } from './commands';
+import { Commands } from '../src/commands';
 
-const commands = new Commands();
-commands.run();
+describe('commands', () => {
+  it('gets template choices', () => {
+    const commands = new Commands();
+    expect(Object.getPrototypeOf(commands).getTemplateChoices()).toEqual([{ name: 'Basic', value: 'basic' }]);
+  });
+});

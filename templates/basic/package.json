@@ -19,8 +19,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
-    "test:coverage": "tsdx test --coverage",
+    "test": "tsdx tests",
+    "test:coverage": "tsdx tests --coverage",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
     "prepare": "tsdx build && husky install",

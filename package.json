@@ -29,6 +29,7 @@
     "start:create:basic": "ts-node src/index.ts create myproject -t basic",
     "start:build": "ts-node src/index.ts build lmao",
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "prepare": "husky install",
     "lint": "eslint \"{src,templates,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,templates,test}/**/*.ts\" --fix",
@@ -36,7 +37,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config tests/jest-e2e.json"
   },
   "dependencies": {
     "commander": "^8.2.0",
@@ -46,7 +47,7 @@
     "typescript": "^4.4.3"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",

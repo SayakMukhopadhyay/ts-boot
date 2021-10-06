@@ -1,19 +1,33 @@
+/*
+ * Copyright 2021 Sayak Mukhopadhyay
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { Command } from 'commander';
-import inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import { resolve } from 'path';
 import { render } from 'mustache';
-
 import { copySync, readdirSync, readFile, readFileSync, writeFile } from 'fs-extra';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { version } = require('../package.json'); // require is used since package.json is not part of the root dire1
 
 export class Commands {
   program: Command;
+  version: string;
 
   constructor() {
+    this.version = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8').toString()).version;
     this.program = new Command();
-    this.program.version(version);
+    this.program.version(this.version);
     this.create().build().watch().test().lint();
   }
 
@@ -30,7 +44,7 @@ export class Commands {
         let template = options.template;
         if (!template) {
           template = (
-            await inquirer.prompt([
+            await prompt([
               {
                 type: 'list',
                 name: 'templateNme',
