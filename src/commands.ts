@@ -18,7 +18,7 @@ import { Command } from 'commander';
 import { prompt } from 'inquirer';
 import { resolve } from 'path';
 import { render } from 'mustache';
-import * as execa from 'execa';
+import execa from 'execa';
 
 import { copySync, readdirSync, readFile, readFileSync, writeFile } from 'fs-extra';
 
