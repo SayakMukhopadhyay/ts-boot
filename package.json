@@ -18,7 +18,7 @@
   "author": "Sayak Mukhopadhyay <mukhopadhyaysayak@gmail.com>",
   "main": "index.js",
   "bin": {
-    "tsboot": "./dist/index.js"
+    "ts-boot": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -36,7 +36,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config tests/jest-e2e.json"
+    "test:e2e": "jest --config tests/jest-e2e.json",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "commander": "^8.2.0",
